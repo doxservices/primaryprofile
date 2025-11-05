@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xavier B. Hemmings - Professional Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 40px 0;
+            margin-bottom: 60px;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1a1a1a;
+            letter-spacing: -0.5px;
+        }
+
+        .tagline {
+            font-size: 1.1em;
+            font-weight: 400;
+            color: #6b7280;
+            margin-bottom: 20px;
+        }
+
+        .contact-info {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            font-size: 0.95em;
+            color: #6b7280;
+        }
+
+        .contact-info a {
+            color: #2563eb;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.2s;
+        }
+
+        .contact-info a:hover {
+            color: #1d4ed8;
+        }
+
+        .contact-info svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .intro {
+            background: #ffffff;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid #e5e7eb;
+            border-radius: 2px;
+        }
+
+        .intro h2 {
+            color: #1a1a1a;
+            margin-bottom: 16px;
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+
+        .intro p {
+            font-size: 1em;
+            line-height: 1.7;
+            color: #4b5563;
+        }
+
+        .resume-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .resume-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 2px;
+            padding: 32px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .resume-card:hover {
+            border-color: #2563eb;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .icon-container {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-container svg {
+            width: 32px;
+            height: 32px;
+            stroke: #2563eb;
+        }
+
+        .resume-card h3 {
+            color: #1a1a1a;
+            font-size: 1.25em;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .resume-card p {
+            color: #6b7280;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 0.95em;
+        }
+
+        .resume-card ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+
+        .resume-card ul li {
+            padding: 6px 0;
+            color: #4b5563;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .resume-card ul li::before {
+            content: "";
+            width: 4px;
+            height: 4px;
+            background: #2563eb;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 2px;
+            font-weight: 500;
+            font-size: 0.9em;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background: #1d4ed8;
+        }
+
+        .btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .skills-preview {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #f3f4f6;
+            color: #4b5563;
+            padding: 4px 12px;
+            border-radius: 2px;
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px 20px 40px;
+            color: #6b7280;
+            font-size: 0.9em;
+            border-top: 1px solid #e5e7eb;
+            background: #ffffff;
+        }
+
+        footer p {
+            margin: 8px 0;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .tagline {
+                font-size: 1em;
+            }
+
+            .resume-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .intro {
+                padding: 24px;
+            }
+
+            .resume-card {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Xavier B. Hemmings</h1>
+            <p class="tagline">Advanced Analytics & Solutions Professional | Digital Transformation Specialist</p>
+            <div class="contact-info">
+                <a href="mailto:x_hemmings@yahoo.com">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                    x_hemmings@yahoo.com
+                </a>
+                <a href="tel:+18765076645">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                    </svg>
+                    (876) 507-6645
+                </a>
+                <span style="display: flex; align-items: center; gap: 8px; color: #6b7280;">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                    Working in Kingston, Jamaica
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="intro">
+            <h2>Consultant Profile</h2>
+            <p>
+                As a seasoned analytics and solutions consultant with over 10 years of proven experience, I partner with 
+                organizations to drive measurable business outcomes. My approach centers on five key value drivers: 
+                <strong>reducing operational costs</strong> through process automation and workflow optimization, 
+                <strong>increasing revenue</strong> by identifying growth opportunities and optimizing customer targeting, 
+                <strong>enhancing visibility</strong> with executive dashboards and real-time reporting frameworks, 
+                <strong>designing scalable solutions</strong> that adapt to evolving business needs, and 
+                <strong>streamlining processes</strong> to eliminate inefficiencies and improve ROI. Whether you need 
+                Business Intelligence expertise, Workforce Management optimization, Data Engineering infrastructure, 
+                Business Analysis capabilities, or Software Development solutions, each specialized profile below 
+                demonstrates how my skills directly translate to bottom-line impact for your organization.
+            </p>
+        </div>
+
+        <div class="resume-grid">
+            <div class="resume-card" onclick="window.location.href='business_intelligence.html'">
+                <div class="icon-container">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+                    </svg>
+                </div>
+                <h3>Business Intelligence & Data Analytics</h3>
+                <p>
+                    Specialized in Power BI, Tableau, and SQL with expertise in customer value management and developing 
+                    automated reporting solutions for executive decision-making.
+                </p>
+                <ul>
+                    <li>Power BI & Tableau Development</li>
+                    <li>Advanced SQL & DAX</li>
+                    <li>Customer Analytics</li>
+                    <li>Executive Dashboards</li>
+                </ul>
+                <div class="skills-preview">
+                    <span class="badge">Power BI</span>
+                    <span class="badge">Tableau</span>
+                    <span class="badge">SQL</span>
+                    <span class="badge">DAX</span>
+                    <span class="badge">Python</span>
+                </div>
+                <br>
+                <a href="business_intelligence.html" class="btn" onclick="event.stopPropagation()">
+                    View Resume
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="resume-card" onclick="window.location.href='workforce_management.html'">
+                <div class="icon-container">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+                    </svg>
+                </div>
+                <h3>Workforce Management</h3>
+                <p>
+                    Strategic WFM leader with expertise managing global operations for 6,500+ agents. Proven track record 
+                    in forecasting, capacity planning, and optimizing workforce efficiency.
+                </p>
+                <ul>
+                    <li>Global Operations Leadership</li>
+                    <li>Forecasting & Capacity Planning</li>
+                    <li>Real-Time Management</li>
+                    <li>Multi-Region Coordination</li>
+                </ul>
+                <div class="skills-preview">
+                    <span class="badge">WFM</span>
+                    <span class="badge">Capacity Planning</span>
+                    <span class="badge">Forecasting</span>
+                    <span class="badge">Analytics</span>
+                </div>
+                <br>
+                <a href="workforce_management.html" class="btn" onclick="event.stopPropagation()">
+                    View Resume
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="resume-card" onclick="window.location.href='business_analysis.html'">
+                <div class="icon-container">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
+                    </svg>
+                </div>
+                <h3>Business Analysis & Project Management</h3>
+                <p>
+                    Experienced in requirements gathering, process optimization, and stakeholder management. Skilled in 
+                    translating business needs into actionable technical specifications.
+                </p>
+                <ul>
+                    <li>Requirements Analysis</li>
+                    <li>Stakeholder Management</li>
+                    <li>Process Improvement</li>
+                    <li>Agile Methodologies</li>
+                </ul>
+                <div class="skills-preview">
+                    <span class="badge">Business Analysis</span>
+                    <span class="badge">Agile</span>
+                    <span class="badge">UAT</span>
+                    <span class="badge">Figma</span>
+                </div>
+                <br>
+                <a href="business_analysis.html" class="btn" onclick="event.stopPropagation()">
+                    View Resume
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="resume-card" onclick="window.location.href='data_engineering.html'">
+                <div class="icon-container">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
+                    </svg>
+                </div>
+                <h3>Data Engineering & Automation</h3>
+                <p>
+                    Expert in building scalable data pipelines, ETL processes, and workflow automation. Strong background 
+                    in database optimization and automated reporting systems.
+                </p>
+                <ul>
+                    <li>ETL Pipeline Development</li>
+                    <li>Data Warehouse Architecture</li>
+                    <li>Workflow Automation</li>
+                    <li>Database Optimization</li>
+                </ul>
+                <div class="skills-preview">
+                    <span class="badge">ETL</span>
+                    <span class="badge">Power Query</span>
+                    <span class="badge">Python</span>
+                    <span class="badge">Oracle SQL</span>
+                </div>
+                <br>
+                <a href="data_engineering.html" class="btn" onclick="event.stopPropagation()">
+                    View Resume
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="resume-card" onclick="window.location.href='software_development.html'">
+                <div class="icon-container">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+                    </svg>
+                </div>
+                <h3>Software Development</h3>
+                <p>
+                    Full-stack developer with experience in modern web technologies. Skilled in UI/UX design, database 
+                    architecture, and managing full software development lifecycle.
+                </p>
+                <ul>
+                    <li>Full-Stack Development</li>
+                    <li>UI/UX Design (Figma)</li>
+                    <li>Database Design</li>
+                    <li>JavaScript Instruction</li>
+                </ul>
+                <div class="skills-preview">
+                    <span class="badge">JavaScript</span>
+                    <span class="badge">PHP/Laravel</span>
+                    <span class="badge">Python</span>
+                    <span class="badge">MySQL</span>
+                </div>
+                <br>
+                <a href="software_development.html" class="btn" onclick="event.stopPropagation()">
+                    View Resume
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Xavier B. Hemmings. All rights reserved.</p>
+        <p>Available for consulting, contract work, and full-time opportunities.</p>
+    </footer>
+</body>
+</html>
