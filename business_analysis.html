@@ -282,12 +282,32 @@
         var toggle = document.getElementById('navToggle');
         var overlay = document.getElementById('navOverlay');
         var sideNav = document.getElementById('sideNav');
-        function close(){ sideNav.classList.remove('open'); overlay.classList.remove('open'); }
+        var closeTimer = null;
+
+        function open(){
+            clearTimeout(closeTimer);
+            sideNav.classList.add('open');
+            overlay.classList.add('open');
+        }
+        function closeNow(){
+            clearTimeout(closeTimer);
+            sideNav.classList.remove('open');
+            overlay.classList.remove('open');
+        }
+        function scheduleClose(){
+            clearTimeout(closeTimer);
+            closeTimer = setTimeout(closeNow, 200);
+        }
+
         toggle.addEventListener('click', function(){
-            sideNav.classList.toggle('open');
-            overlay.classList.toggle('open');
+            sideNav.classList.contains('open') ? closeNow() : open();
         });
-        overlay.addEventListener('click', close);
+        toggle.addEventListener('mouseenter', open);
+        toggle.addEventListener('mouseleave', scheduleClose);
+        sideNav.addEventListener('mouseenter', open);
+        sideNav.addEventListener('mouseleave', scheduleClose);
+        overlay.addEventListener('click', closeNow);
+
         var current = location.pathname.split('/').pop() || 'index.html';
         sideNav.querySelectorAll('a').forEach(function(a){
             if (a.getAttribute('href') === current) a.classList.add('active');
