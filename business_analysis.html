@@ -283,30 +283,39 @@
         var overlay = document.getElementById('navOverlay');
         var sideNav = document.getElementById('sideNav');
         var closeTimer = null;
+        var locked = sessionStorage.getItem('sidebarOpen') === 'true';
 
-        function open(){
+        function show(){
             clearTimeout(closeTimer);
             sideNav.classList.add('open');
             overlay.classList.add('open');
         }
-        function closeNow(){
+        function hide(){
             clearTimeout(closeTimer);
             sideNav.classList.remove('open');
             overlay.classList.remove('open');
         }
-        function scheduleClose(){
+        function scheduleHide(){
+            if (locked) return;
             clearTimeout(closeTimer);
-            closeTimer = setTimeout(closeNow, 200);
+            closeTimer = setTimeout(hide, 200);
+        }
+        function setLocked(value){
+            locked = value;
+            sessionStorage.setItem('sidebarOpen', locked);
         }
 
         toggle.addEventListener('click', function(){
-            sideNav.classList.contains('open') ? closeNow() : open();
+            setLocked(!locked);
+            locked ? show() : hide();
         });
-        toggle.addEventListener('mouseenter', open);
-        toggle.addEventListener('mouseleave', scheduleClose);
-        sideNav.addEventListener('mouseenter', open);
-        sideNav.addEventListener('mouseleave', scheduleClose);
-        overlay.addEventListener('click', closeNow);
+        toggle.addEventListener('mouseenter', show);
+        toggle.addEventListener('mouseleave', scheduleHide);
+        sideNav.addEventListener('mouseenter', show);
+        sideNav.addEventListener('mouseleave', scheduleHide);
+        overlay.addEventListener('click', function(){ setLocked(false); hide(); });
+
+        if (locked) show();
 
         var current = location.pathname.split('/').pop() || 'index.html';
         sideNav.querySelectorAll('a').forEach(function(a){
