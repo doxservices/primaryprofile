@@ -62,9 +62,80 @@
             display: inline;
             margin-right: 15px;
         }
+
+        #navToggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid #d1d5db;
+            background: #ffffff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+        }
+        #navToggle svg { width: 20px; height: 20px; stroke: #333; }
+        #navOverlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.3);
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+        #navOverlay.open { opacity: 1; pointer-events: auto; }
+        #sideNav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 240px;
+            background: #ffffff;
+            border-right: 1px solid #e5e7eb;
+            box-shadow: 2px 0 12px rgba(0,0,0,0.08);
+            z-index: 1000;
+            transform: translateX(-100%);
+            transition: transform 0.25s ease;
+            padding: 70px 20px 20px;
+        }
+        #sideNav.open { transform: translateX(0); }
+        #sideNav a {
+            display: block;
+            padding: 10px 12px;
+            margin-bottom: 4px;
+            border-radius: 4px;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        #sideNav a:hover { background: #f3f4f6; }
+        #sideNav a.active { background: #eef2ff; color: #2563eb; font-weight: 600; }
+
+        @media print {
+            #navToggle, #navOverlay, #sideNav { display: none !important; }
+        }
     </style>
 </head>
 <body>
+    <button id="navToggle" aria-label="Toggle navigation">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <div id="navOverlay"></div>
+    <nav id="sideNav">
+        <a href="index.html">Home</a>
+        <a href="business_intelligence.html">Business Intelligence</a>
+        <a href="workforce_management.html">Workforce Management</a>
+        <a href="business_analysis.html">Business Analysis</a>
+        <a href="data_engineering.html">Data Engineering</a>
+        <a href="software_development.html">Software Development</a>
+    </nav>
+
     <h1>XAVIER B. HEMMINGS</h1>
     <div class="contact-info">
         <p>Working in Kingston, Jamaica | (876) 507-6645 | x_hemmings@yahoo.com</p>
@@ -244,5 +315,22 @@
         <li><strong>Client-Facing Work:</strong> Direct client interaction for requirements gathering, demos, and project updates</li>
     </ul>
 
+    <script>
+    (function(){
+        var toggle = document.getElementById('navToggle');
+        var overlay = document.getElementById('navOverlay');
+        var sideNav = document.getElementById('sideNav');
+        function close(){ sideNav.classList.remove('open'); overlay.classList.remove('open'); }
+        toggle.addEventListener('click', function(){
+            sideNav.classList.toggle('open');
+            overlay.classList.toggle('open');
+        });
+        overlay.addEventListener('click', close);
+        var current = location.pathname.split('/').pop() || 'index.html';
+        sideNav.querySelectorAll('a').forEach(function(a){
+            if (a.getAttribute('href') === current) a.classList.add('active');
+        });
+    })();
+    </script>
 </body>
 </html>
