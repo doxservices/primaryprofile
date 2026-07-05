@@ -83,13 +83,10 @@
         #navOverlay {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.3);
             z-index: 999;
-            opacity: 0;
             pointer-events: none;
-            transition: opacity 0.4s ease;
         }
-        #navOverlay.open { opacity: 1; pointer-events: auto; }
+        #navOverlay.open { pointer-events: auto; }
         #sideNav {
             position: fixed;
             top: 0;
@@ -302,23 +299,19 @@
         var toggle = document.getElementById('navToggle');
         var overlay = document.getElementById('navOverlay');
         var sideNav = document.getElementById('sideNav');
-        var closeTimer = null;
         var locked = sessionStorage.getItem('sidebarOpen') === 'true';
 
         function show(){
-            clearTimeout(closeTimer);
             sideNav.classList.add('open');
             overlay.classList.add('open');
         }
         function hide(){
-            clearTimeout(closeTimer);
             sideNav.classList.remove('open');
             overlay.classList.remove('open');
         }
         function scheduleHide(){
             if (locked) return;
-            clearTimeout(closeTimer);
-            closeTimer = setTimeout(hide, 500);
+            hide();
         }
         function setLocked(value){
             locked = value;
