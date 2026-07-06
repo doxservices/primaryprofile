@@ -26,10 +26,14 @@
         }
 
         header {
-            background: #ffffff;
-            border-bottom: 1px solid #e5e7eb;
-            padding: 40px 0;
+            position: sticky;
+            top: 0;
+            z-index: 500;
+            background: #e9f4f6;
+            border-bottom: 3px solid #1f7a8c;
+            padding: 20px 0;
             margin-bottom: 60px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
         }
 
         .header-content {
@@ -39,18 +43,18 @@
         }
 
         h1 {
-            font-size: 2.5em;
+            font-size: 2em;
             font-weight: 600;
-            margin-bottom: 8px;
-            color: #1a1a1a;
+            margin-bottom: 6px;
+            color: #16323a;
             letter-spacing: -0.5px;
         }
 
         .tagline {
-            font-size: 1.1em;
-            font-weight: 400;
-            color: #6b7280;
-            margin-bottom: 20px;
+            font-size: 1.05em;
+            font-weight: 500;
+            color: #1f7a8c;
+            margin-bottom: 12px;
         }
 
         .contact-info {
@@ -62,7 +66,7 @@
         }
 
         .contact-info a {
-            color: #2563eb;
+            color: #1f7a8c;
             text-decoration: none;
             display: flex;
             align-items: center;
@@ -71,7 +75,7 @@
         }
 
         .contact-info a:hover {
-            color: #1d4ed8;
+            color: #175f6e;
         }
 
         .contact-info svg {
@@ -117,7 +121,7 @@
         }
 
         .resume-card:hover {
-            border-color: #2563eb;
+            border-color: #1f7a8c;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
@@ -133,7 +137,7 @@
         .icon-container svg {
             width: 32px;
             height: 32px;
-            stroke: #2563eb;
+            stroke: #1f7a8c;
         }
 
         .resume-card h3 {
@@ -169,7 +173,7 @@
             content: "";
             width: 4px;
             height: 4px;
-            background: #2563eb;
+            background: #1f7a8c;
             border-radius: 50%;
             flex-shrink: 0;
         }
@@ -179,7 +183,7 @@
             align-items: center;
             gap: 8px;
             padding: 10px 20px;
-            background: #2563eb;
+            background: #1f7a8c;
             color: white;
             text-decoration: none;
             border-radius: 2px;
@@ -189,7 +193,7 @@
         }
 
         .btn:hover {
-            background: #1d4ed8;
+            background: #175f6e;
         }
 
         .btn svg {
@@ -208,10 +212,11 @@
 
         .badge {
             display: inline-block;
-            background: #f3f4f6;
-            color: #4b5563;
+            background: #eef6f8;
+            border: 1px solid #dbecef;
+            color: #206577;
             padding: 4px 12px;
-            border-radius: 2px;
+            border-radius: 3px;
             font-size: 0.8em;
             font-weight: 500;
         }
@@ -230,6 +235,10 @@
         }
 
         @media (max-width: 768px) {
+            header {
+                position: static;
+            }
+
             h1 {
                 font-size: 2em;
             }
@@ -468,7 +477,7 @@
     </div>
 
     <footer>
-        <p>&copy; 2025 Xavier B. Hemmings. All rights reserved.</p>
+        <p>&copy; 2026 Xavier B. Hemmings. All rights reserved.</p>
         <p>Available for consulting, contract work, and full-time opportunities.</p>
     </footer>
 </body>
