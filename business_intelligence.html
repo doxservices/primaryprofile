@@ -43,10 +43,10 @@
             text-transform: uppercase;
             letter-spacing: 0.6px;
             color: #175f6e;
+            background: #e9f4f6;
             border-left: 3px solid #1f7a8c;
-            border-bottom: 1px solid #dcebee;
-            padding-left: 10px;
-            padding-bottom: 6px;
+            border-bottom: 1px solid #cfe3e8;
+            padding: 7px 12px;
             margin-top: 28px;
             margin-bottom: 12px;
         }
@@ -194,14 +194,13 @@
         }
         #sideNav a:hover { background: #f3f4f6; }
         #sideNav a.active { background: #e9f4f6; color: #1f7a8c; font-weight: 600; }
-        #sideNav a.nav-home { color: #1f7a8c; font-weight: 600; }
-        #sideNav a.nav-home:hover { background: #e9f4f6; }
+        #sideNav a.nav-home { font-weight: 700; }
 
         #printControls {
             position: fixed;
             top: 0;
             left: 50%;
-            transform: translate(-50%, -110%);
+            transform: translate(-50%, calc(-100% + 3px));
             transition: transform 0.4s ease;
             z-index: 1000;
             display: flex;
@@ -243,15 +242,48 @@
             background: #ffffff;
             color: #52616b;
             border-radius: 4px;
-            padding: 4px 10px;
-            font-size: 12px;
+            width: 26px;
+            height: 26px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
+        }
+        #printControls .pc-pin svg {
+            width: 14px;
+            height: 14px;
         }
         #printControls .pc-pin.active {
             background: #1f7a8c;
             border-color: #1f7a8c;
             color: #ffffff;
         }
+        #printControls .pc-handle {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 46px;
+            height: 18px;
+            border: 1px solid #e5e7eb;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            background: #ffffff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            cursor: pointer;
+        }
+        #printControls .pc-handle svg {
+            width: 14px;
+            height: 14px;
+            stroke: #1f7a8c;
+            transition: transform 0.3s ease;
+        }
+        #printControls.open .pc-handle svg { transform: rotate(180deg); }
         #printControls .pc-print {
             border: none;
             background: #1f7a8c;
@@ -291,7 +323,12 @@
         <button type="button" class="pc-size" data-size="letter">Letter</button>
         <button type="button" class="pc-size" data-size="legal">Legal</button>
         <button type="button" id="printBtn" class="pc-print">Print</button>
-        <button type="button" id="pinBtn" class="pc-pin">Pin</button>
+        <button type="button" id="pinBtn" class="pc-pin" title="Pin print setup" aria-label="Pin print setup">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 17v5"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1z"/></svg>
+        </button>
+        <button type="button" id="pcHandle" class="pc-handle" aria-label="Toggle print setup">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+        </button>
     </div>
     <nav id="sideNav">
         <div class="nav-section">
@@ -456,6 +493,7 @@
         }
 
         var pageNav = document.getElementById('pageNav');
+        var sectionLinks = [];
         document.querySelectorAll('h2').forEach(function(h){
             var slug = h.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
             h.id = slug;
@@ -463,6 +501,7 @@
             a.href = '#' + slug;
             a.textContent = titleCase(h.textContent);
             pageNav.appendChild(a);
+            sectionLinks.push({ id: slug, link: a });
         });
 
         // Wrap each heading with its content so print pagination can move sections as units
@@ -487,7 +526,7 @@
 
         function syncPin(){
             pinBtn.classList.toggle('active', pinned);
-            pinBtn.textContent = pinned ? 'Pinned' : 'Pin';
+            pinBtn.title = pinned ? 'Unpin print setup' : 'Pin print setup';
             if (pinned) printControls.classList.add('open');
         }
         function show(){
@@ -528,6 +567,9 @@
             localStorage.setItem('printBarPinned', pinned);
             syncPin();
         });
+        document.getElementById('pcHandle').addEventListener('click', function(){
+            printControls.classList.toggle('open');
+        });
 
         if (locked) show();
         syncPin();
@@ -535,6 +577,22 @@
         sideNav.querySelectorAll('a').forEach(function(a){
             if (a.getAttribute('href') === current) a.classList.add('active');
         });
+
+        // Scroll: retract the print bar when unpinned, and spotlight the section in view
+        function updateScrollSpy(){
+            var pos = window.scrollY + anchorOffset + 40;
+            var currentLink = null;
+            sectionLinks.forEach(function(s){
+                var el = document.getElementById(s.id);
+                if (el && el.getBoundingClientRect().top + window.scrollY <= pos) currentLink = s.link;
+            });
+            sectionLinks.forEach(function(s){ s.link.classList.toggle('active', s.link === currentLink); });
+        }
+        window.addEventListener('scroll', function(){
+            if (!pinned) printControls.classList.remove('open');
+            updateScrollSpy();
+        }, { passive: true });
+        updateScrollSpy();
 
         // Print setup: standard margins, Letter/Legal selects the paper size
         var printStyle = document.createElement('style');
