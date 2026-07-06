@@ -155,30 +155,124 @@
             top: 0;
             left: 0;
             height: 100%;
-            width: 240px;
+            width: 250px;
             background: #ffffff;
             border-right: 1px solid #e5e7eb;
             box-shadow: 2px 0 12px rgba(0,0,0,0.08);
             z-index: 1000;
             transform: translateX(-100%);
             transition: transform 0.4s ease;
-            padding: 70px 20px 20px;
+            padding: 64px 16px 24px;
+            overflow-y: auto;
         }
         #sideNav.open { transform: translateX(0); }
+        .nav-heading {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #64748b;
+            margin: 0 0 6px;
+            padding: 0 12px;
+        }
+        .nav-section + .nav-section {
+            margin-top: 16px;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 16px;
+        }
         #sideNav a {
             display: block;
-            padding: 10px 12px;
-            margin-bottom: 4px;
+            padding: 7px 12px;
+            margin-bottom: 2px;
             border-radius: 4px;
-            color: #333;
+            color: #374151;
             text-decoration: none;
-            font-size: 14px;
+            font-size: 13.5px;
         }
         #sideNav a:hover { background: #f3f4f6; }
         #sideNav a.active { background: #e9f4f6; color: #1f7a8c; font-weight: 600; }
 
+        #printControls {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, -110%);
+            transition: transform 0.4s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            max-width: calc(100vw - 100px);
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+            padding: 10px 16px;
+            font-size: 12.5px;
+            color: #374151;
+        }
+        #printControls.open { transform: translate(-50%, 0); }
+        #printControls .pc-title {
+            font-weight: 600;
+            color: #175f6e;
+        }
+        #printControls .pc-label {
+            color: #52616b;
+            margin-left: 4px;
+        }
+        #printControls .pc-size {
+            border: 1px solid #d5e8ec;
+            background: #ffffff;
+            color: #374151;
+            border-radius: 4px;
+            padding: 4px 10px;
+            font-size: 12.5px;
+            cursor: pointer;
+        }
+        #printControls .pc-size.active {
+            background: #e9f4f6;
+            border-color: #1f7a8c;
+            color: #175f6e;
+            font-weight: 600;
+        }
+        #printControls .pc-field {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: #52616b;
+        }
+        #printControls .pc-field input {
+            width: 54px;
+            padding: 3px 4px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #374151;
+        }
+        #printControls .pc-print {
+            border: none;
+            background: #1f7a8c;
+            color: #ffffff;
+            border-radius: 4px;
+            padding: 5px 14px;
+            font-size: 12.5px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        #printControls .pc-print:hover { background: #175f6e; }
+
+        html { scroll-behavior: smooth; }
+        h2 { scroll-margin-top: 16px; }
+
         @media print {
-            #navToggle, #navOverlay, #sideNav { display: none !important; }
+            #navToggle, #navOverlay, #sideNav, #printControls { display: none !important; }
+            body {
+                background: #ffffff;
+                max-width: 100%;
+                padding: 0;
+            }
         }
     </style>
 </head>
@@ -187,13 +281,31 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
     </button>
     <div id="navOverlay"></div>
+    <div id="printControls">
+        <span class="pc-title">Print Setup</span>
+        <button type="button" class="pc-size" data-size="letter">Letter</button>
+        <button type="button" class="pc-size" data-size="legal">Legal</button>
+        <span class="pc-label">Margins (in):</span>
+        <label class="pc-field">Top <input type="number" step="0.05" min="0" max="2" data-edge="top"></label>
+        <label class="pc-field">Bottom <input type="number" step="0.05" min="0" max="2" data-edge="bottom"></label>
+        <label class="pc-field">Left <input type="number" step="0.05" min="0" max="2" data-edge="left"></label>
+        <label class="pc-field">Right <input type="number" step="0.05" min="0" max="2" data-edge="right"></label>
+        <button type="button" id="printBtn" class="pc-print">Print</button>
+    </div>
     <nav id="sideNav">
-        <a href="index.html">Home</a>
-        <a href="business_intelligence.html">Business Intelligence</a>
-        <a href="workforce_management.html">Workforce Management</a>
-        <a href="business_analysis.html">Business Analysis</a>
-        <a href="data_engineering.html">Data Engineering</a>
-        <a href="software_development.html">Software Development</a>
+        <div class="nav-section">
+            <p class="nav-heading">On This Page</p>
+            <div id="pageNav"></div>
+        </div>
+        <div class="nav-section">
+            <p class="nav-heading">Resumes</p>
+            <a href="index.html">Home</a>
+            <a href="business_intelligence.html">Business Intelligence</a>
+            <a href="workforce_management.html">Workforce Management</a>
+            <a href="business_analysis.html">Business Analysis</a>
+            <a href="data_engineering.html">Data Engineering</a>
+            <a href="software_development.html">Software Development</a>
+        </div>
     </nav>
 
     <header class="resume-header">
@@ -316,21 +428,35 @@
         var toggle = document.getElementById('navToggle');
         var overlay = document.getElementById('navOverlay');
         var sideNav = document.getElementById('sideNav');
+        var printControls = document.getElementById('printControls');
         var closeTimer = null;
         var locked = sessionStorage.getItem('sidebarOpen') === 'true';
+
+        var pageNav = document.getElementById('pageNav');
+        document.querySelectorAll('h2').forEach(function(h){
+            var slug = h.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+            h.id = slug;
+            var a = document.createElement('a');
+            a.href = '#' + slug;
+            a.textContent = h.textContent.toLowerCase().replace(/(^|[\s(\/-])[a-z]/g, function(c){ return c.toUpperCase(); });
+            pageNav.appendChild(a);
+        });
 
         function show(){
             clearTimeout(closeTimer);
             sideNav.classList.add('open');
             overlay.classList.add('open');
+            printControls.classList.add('open');
         }
         function hide(){
             clearTimeout(closeTimer);
             sideNav.classList.remove('open');
             overlay.classList.remove('open');
+            printControls.classList.remove('open');
         }
         function scheduleHide(){
             if (locked) return;
+            if (printControls.contains(document.activeElement)) return;
             clearTimeout(closeTimer);
             closeTimer = setTimeout(hide, 500);
         }
@@ -347,6 +473,8 @@
         toggle.addEventListener('mouseleave', scheduleHide);
         sideNav.addEventListener('mouseenter', show);
         sideNav.addEventListener('mouseleave', scheduleHide);
+        printControls.addEventListener('mouseenter', show);
+        printControls.addEventListener('mouseleave', scheduleHide);
         overlay.addEventListener('click', function(){ setLocked(false); hide(); });
 
         if (locked) show();
@@ -355,6 +483,69 @@
         sideNav.querySelectorAll('a').forEach(function(a){
             if (a.getAttribute('href') === current) a.classList.add('active');
         });
+
+        var printStyle = document.createElement('style');
+        document.head.appendChild(printStyle);
+        var marginDefaults = {
+            letter: { top: 0.5, bottom: 0.5, left: 0.5, right: 0.5 },
+            legal: { top: 0.75, bottom: 0.75, left: 0.75, right: 0.75 }
+        };
+        var prefs = null;
+        try { prefs = JSON.parse(localStorage.getItem('printPrefs')); } catch (e) {}
+        if (!prefs || !marginDefaults[prefs.size] || !prefs.margins) {
+            prefs = {
+                size: 'letter',
+                margins: {
+                    top: marginDefaults.letter.top,
+                    bottom: marginDefaults.letter.bottom,
+                    left: marginDefaults.letter.left,
+                    right: marginDefaults.letter.right
+                }
+            };
+        }
+        var sizeButtons = printControls.querySelectorAll('.pc-size');
+        var marginInputs = printControls.querySelectorAll('.pc-field input');
+
+        function applyPrint(){
+            printStyle.textContent = '@page { size: ' + prefs.size + '; margin: ' +
+                prefs.margins.top + 'in ' + prefs.margins.right + 'in ' +
+                prefs.margins.bottom + 'in ' + prefs.margins.left + 'in; }';
+            sizeButtons.forEach(function(b){
+                b.classList.toggle('active', b.getAttribute('data-size') === prefs.size);
+            });
+            marginInputs.forEach(function(inp){
+                inp.value = prefs.margins[inp.getAttribute('data-edge')];
+            });
+            localStorage.setItem('printPrefs', JSON.stringify(prefs));
+        }
+
+        sizeButtons.forEach(function(b){
+            b.addEventListener('click', function(){
+                var size = b.getAttribute('data-size');
+                prefs.size = size;
+                prefs.margins = {
+                    top: marginDefaults[size].top,
+                    bottom: marginDefaults[size].bottom,
+                    left: marginDefaults[size].left,
+                    right: marginDefaults[size].right
+                };
+                applyPrint();
+            });
+        });
+        marginInputs.forEach(function(inp){
+            inp.addEventListener('change', function(){
+                var v = parseFloat(inp.value);
+                if (isNaN(v) || v < 0) v = 0;
+                if (v > 2) v = 2;
+                prefs.margins[inp.getAttribute('data-edge')] = v;
+                applyPrint();
+            });
+        });
+        document.getElementById('printBtn').addEventListener('click', function(){
+            window.print();
+        });
+
+        applyPrint();
     })();
     </script>
 </body>
