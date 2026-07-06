@@ -51,9 +51,12 @@
             margin-bottom: 12px;
         }
         h3 {
-            font-size: 14px;
-            margin-bottom: 5px;
-            color: #16323a;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #1f7a8c;
+            margin: 20px 0 8px;
         }
         .contact-info {
             font-size: 13px;
@@ -191,6 +194,8 @@
         }
         #sideNav a:hover { background: #f3f4f6; }
         #sideNav a.active { background: #e9f4f6; color: #1f7a8c; font-weight: 600; }
+        #sideNav a.nav-home { color: #1f7a8c; font-weight: 600; }
+        #sideNav a.nav-home:hover { background: #e9f4f6; }
 
         #printControls {
             position: fixed;
@@ -270,7 +275,7 @@
                 max-width: 100%;
                 padding: 0;
             }
-            h2 { break-after: avoid; page-break-after: avoid; }
+            h2, h3 { break-after: avoid; page-break-after: avoid; }
             .pb { break-before: page; page-break-before: always; }
             .print-cont { display: block; }
         }
@@ -295,7 +300,7 @@
         </div>
         <div class="nav-section">
             <p class="nav-heading">Profiles</p>
-            <a href="index.html">Home</a>
+            <a href="index.html" class="nav-home">Home</a>
             <a href="business_intelligence.html">Business Intelligence</a>
             <a href="workforce_management.html">Workforce Management</a>
             <a href="business_analysis.html">Business Analysis</a>
@@ -320,24 +325,6 @@
         <div class="stat-box"><span class="stat-number">6,500+ Agents</span><span class="stat-label">Managed Across 4 Global Regions</span></div>
         <div class="stat-box"><span class="stat-number">125</span><span class="stat-label">Lines of Business Standardized</span></div>
         <div class="stat-box"><span class="stat-number">700+</span><span class="stat-label">Specialized Campaigns Supported</span></div>
-    </div>
-
-    <h2>CORE COMPETENCIES</h2>
-    <div class="skills-section">
-        <ul>
-            <li>Global WFM Operations</li>
-            <li>Capacity Planning & Forecasting</li>
-            <li>Real-Time Management</li>
-            <li>Scheduling & Adherence</li>
-            <li>Workforce Analytics</li>
-            <li>Multi-Site/Multi-Region Management</li>
-            <li>Resource Allocation & Optimization</li>
-            <li>Service Level Management</li>
-            <li>Shrinkage & Attrition Management</li>
-            <li>Priority-Based Routing</li>
-            <li>Interval & Intraday Management</li>
-            <li>WFM Training & Development</li>
-        </ul>
     </div>
 
     <h2>PROFESSIONAL EXPERIENCE</h2>
@@ -399,7 +386,40 @@
         </ul>
     </div>
 
-    <h2>WORKFORCE MANAGEMENT EXPERTISE</h2>
+    <h3>Key Achievements</h3>
+    <ul>
+        <li>Successfully managed workforce operations for 6,500+ agents across 4 global regions simultaneously</li>
+        <li>Reduced operational costs through optimized scheduling and improved forecast accuracy</li>
+        <li>Developed data infrastructure supporting executive decision-making for multi-million dollar BPO operations</li>
+        <li>Built and mentored high-performing WFM teams across multiple international sites</li>
+        <li>Recommended by C-suite executives for leadership on 20+ strategic workforce initiatives</li>
+    </ul>
+
+    <h2>TECHNICAL SKILLS</h2>
+    <h3>Core Competencies</h3>
+    <div class="skills-section">
+        <ul>
+            <li>Global WFM Operations</li>
+            <li>Capacity Planning & Forecasting</li>
+            <li>Real-Time Management</li>
+            <li>Scheduling & Adherence</li>
+            <li>Workforce Analytics</li>
+            <li>Multi-Site/Multi-Region Management</li>
+            <li>Resource Allocation & Optimization</li>
+            <li>Service Level Management</li>
+            <li>Shrinkage & Attrition Management</li>
+            <li>Priority-Based Routing</li>
+            <li>Interval & Intraday Management</li>
+            <li>WFM Training & Development</li>
+        </ul>
+    </div>
+    <h3>Tools & Technologies</h3>
+    <div class="skills-section">
+        <p><strong>Data & Analytics:</strong> Power BI, Tableau, Oracle SQL, MySQL, Excel (Advanced), VBA, Python</p>
+        <p><strong>Automation:</strong> Power Query, Power Automate, SQL job scheduling, automated reporting</p>
+        <p><strong>Project Management:</strong> Agile methodologies, stakeholder management, cross-functional leadership</p>
+    </div>
+    <h3>Workforce Management Expertise</h3>
     <div class="skills-section">
         <p><strong>Forecasting & Planning:</strong> Long-term capacity planning, short-term forecasting, seasonality modeling, volume trend analysis, hiring projections</p>
         <p><strong>Scheduling:</strong> Agent schedule creation, shift optimization, time-off management, adherence monitoring, intraday adjustments</p>
@@ -409,18 +429,11 @@
         <p><strong>Programme Management:</strong> Multi-site operations, multi-region coordination, multi-skill campaign management, vendor management</p>
     </div>
 
-    <h2>TECHNICAL SKILLS</h2>
-    <div class="skills-section">
-        <p><strong>Data & Analytics:</strong> Power BI, Tableau, Oracle SQL, MySQL, Excel (Advanced), VBA, Python</p>
-        <p><strong>Automation:</strong> Power Query, Power Automate, SQL job scheduling, automated reporting</p>
-        <p><strong>Project Management:</strong> Agile methodologies, stakeholder management, cross-functional leadership</p>
-    </div>
-
     <h2>EDUCATION</h2>
     <p><strong>Executive MBA in Business Analytics</strong> - Commencing 2026</p>
     <p><strong>Business Administration Studies</strong> - University of the West Indies (UWI)</p>
 
-    <h2>CERTIFICATES & COURSEWORK</h2>
+    <h3>Certificates & Coursework</h3>
     <p><strong>Workforce Management Master/Trainer Certification</strong></p>
     <ul>
         <li>Real-time/Day-to-day Management (Master/Trainer)</li>
@@ -433,15 +446,6 @@
     <p><strong>SQL for Data Science</strong> - University of California, Davis / Coursera</p>
     <p><strong>Harvard/MIT edX Professional Program in Data Science</strong></p>
     <p><strong>Modular Computer Studies</strong> - UTech SciT</p>
-
-    <h2>KEY ACHIEVEMENTS</h2>
-    <ul>
-        <li>Successfully managed workforce operations for 6,500+ agents across 4 global regions simultaneously</li>
-        <li>Reduced operational costs through optimized scheduling and improved forecast accuracy</li>
-        <li>Developed data infrastructure supporting executive decision-making for multi-million dollar BPO operations</li>
-        <li>Built and mentored high-performing WFM teams across multiple international sites</li>
-        <li>Recommended by C-suite executives for leadership on 20+ strategic workforce initiatives</li>
-    </ul>
 
     <script>
     (function(){
@@ -593,6 +597,15 @@
             document.querySelectorAll('.print-cont').forEach(function(el){ el.parentNode.removeChild(el); });
             document.querySelectorAll('.pb').forEach(function(el){ el.classList.remove('pb'); });
         }
+        function isSubheading(el){
+            if (!el || el.nodeType !== 1) return false;
+            if (el.tagName === 'H3') return true;
+            if (el.tagName === 'P') {
+                var s = el.querySelector('strong');
+                return !!s && s.textContent.trim() === el.textContent.trim();
+            }
+            return false;
+        }
         function paginateForPrint(){
             cleanupPagination();
             var size = PAGE_SIZES[prefSize];
@@ -630,15 +643,23 @@
                     item.classList.add('pb');
                     used = 0;
                 }
-                children.forEach(function(child){
+                children.forEach(function(child, i){
                     var ch = outerHeight(child);
                     if (used + ch <= pageH) { used += ch; return; }
+                    // pull a subheading stranded at the bottom of the page over with us
+                    var anchor = child;
+                    var moved = 0;
+                    var prevEl = children[i - 1];
+                    if (isSubheading(prevEl) && !prevEl.classList.contains('pb')) {
+                        anchor = prevEl;
+                        moved = outerHeight(prevEl);
+                    }
                     var cont = heading.cloneNode(false);
                     cont.removeAttribute('id');
                     cont.className = 'print-cont pb';
                     cont.textContent = titleCase(heading.textContent) + " (Cont'd.)";
-                    item.insertBefore(cont, child);
-                    used = headingH + ch;
+                    item.insertBefore(cont, anchor);
+                    used = headingH + moved + ch;
                 });
             });
 

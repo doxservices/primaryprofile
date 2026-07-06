@@ -51,9 +51,12 @@
             margin-bottom: 12px;
         }
         h3 {
-            font-size: 14px;
-            margin-bottom: 5px;
-            color: #16323a;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #1f7a8c;
+            margin: 20px 0 8px;
         }
         .contact-info {
             font-size: 13px;
@@ -191,6 +194,8 @@
         }
         #sideNav a:hover { background: #f3f4f6; }
         #sideNav a.active { background: #e9f4f6; color: #1f7a8c; font-weight: 600; }
+        #sideNav a.nav-home { color: #1f7a8c; font-weight: 600; }
+        #sideNav a.nav-home:hover { background: #e9f4f6; }
 
         #printControls {
             position: fixed;
@@ -270,7 +275,7 @@
                 max-width: 100%;
                 padding: 0;
             }
-            h2 { break-after: avoid; page-break-after: avoid; }
+            h2, h3 { break-after: avoid; page-break-after: avoid; }
             .pb { break-before: page; page-break-before: always; }
             .print-cont { display: block; }
         }
@@ -295,7 +300,7 @@
         </div>
         <div class="nav-section">
             <p class="nav-heading">Profiles</p>
-            <a href="index.html">Home</a>
+            <a href="index.html" class="nav-home">Home</a>
             <a href="business_intelligence.html">Business Intelligence</a>
             <a href="workforce_management.html">Workforce Management</a>
             <a href="business_analysis.html">Business Analysis</a>
@@ -320,24 +325,6 @@
         <div class="stat-box"><span class="stat-number">2M+ Subscribers</span><span class="stat-label">Covered in Commercial BI Reporting</span></div>
         <div class="stat-box"><span class="stat-number">6,500+ Agents</span><span class="stat-label">Global WFM & Payroll Data Infrastructure</span></div>
         <div class="stat-box"><span class="stat-number">20+ Projects</span><span class="stat-label">Data Delivery for C-Suite Stakeholders</span></div>
-    </div>
-
-    <h2>CORE COMPETENCIES</h2>
-    <div class="skills-section">
-        <ul>
-            <li>Power BI & Tableau Development</li>
-            <li>Advanced SQL & DAX</li>
-            <li>Data Visualization & Storytelling</li>
-            <li>Power Query & ETL</li>
-            <li>Customer Value Management</li>
-            <li>KPI Development & Monitoring</li>
-            <li>Oracle SQL & MySQL</li>
-            <li>Data Modeling & Architecture</li>
-            <li>Executive Reporting & Dashboards</li>
-            <li>A/B Testing & Analytics</li>
-            <li>Forecasting & Predictive Analytics</li>
-            <li>Business Intelligence Strategy</li>
-        </ul>
     </div>
 
     <h2>PROFESSIONAL EXPERIENCE</h2>
@@ -391,7 +378,33 @@
         </ul>
     </div>
 
+    <h3>Key Achievements</h3>
+    <ul>
+        <li>Recommended by C-suite decision makers as data manager on over 20 strategic projects</li>
+        <li>Led data delivery for revenue-generating projects across 3 of Jamaica's top 10 organizations</li>
+        <li>Directed analytics initiatives that shaped development of multiple in-house software solutions</li>
+        <li>Consistently commended for extracting value from latent data stores and delivering high-quality analytical outputs</li>
+    </ul>
+
     <h2>TECHNICAL SKILLS</h2>
+    <h3>Core Competencies</h3>
+    <div class="skills-section">
+        <ul>
+            <li>Power BI & Tableau Development</li>
+            <li>Advanced SQL & DAX</li>
+            <li>Data Visualization & Storytelling</li>
+            <li>Power Query & ETL</li>
+            <li>Customer Value Management</li>
+            <li>KPI Development & Monitoring</li>
+            <li>Oracle SQL & MySQL</li>
+            <li>Data Modeling & Architecture</li>
+            <li>Executive Reporting & Dashboards</li>
+            <li>A/B Testing & Analytics</li>
+            <li>Forecasting & Predictive Analytics</li>
+            <li>Business Intelligence Strategy</li>
+        </ul>
+    </div>
+    <h3>Tools & Technologies</h3>
     <div class="skills-section">
         <p><strong>BI & Visualization:</strong> Power BI (Advanced), Tableau, Power BI Service, DAX, Power Query, M Language</p>
         <p><strong>Data & Databases:</strong> Oracle SQL, MySQL, SQLite, SQL Server, Data Modeling, ETL/ELT Processes</p>
@@ -404,20 +417,12 @@
     <p><strong>Executive MBA in Business Analytics</strong> - Commencing 2026</p>
     <p><strong>Business Administration Studies</strong> - University of the West Indies (UWI)</p>
 
-    <h2>CERTIFICATES & COURSEWORK</h2>
+    <h3>Certificates & Coursework</h3>
     <p><strong>Microsoft Power BI Data Analyst Associate Coursework</strong></p>
     <p><strong>Master BI Data Storytelling</strong> - BI Brainz</p>
     <p><strong>SQL for Data Science</strong> - University of California, Davis / Coursera</p>
     <p><strong>Harvard/MIT edX Professional Program in Data Science</strong></p>
     <p><strong>Modular Computer Studies</strong> - UTech SciT</p>
-
-    <h2>KEY ACHIEVEMENTS</h2>
-    <ul>
-        <li>Recommended by C-suite decision makers as data manager on over 20 strategic projects</li>
-        <li>Led data delivery for revenue-generating projects across 3 of Jamaica's top 10 organizations</li>
-        <li>Directed analytics initiatives that shaped development of multiple in-house software solutions</li>
-        <li>Consistently commended for extracting value from latent data stores and delivering high-quality analytical outputs</li>
-    </ul>
 
     <script>
     (function(){
@@ -569,6 +574,15 @@
             document.querySelectorAll('.print-cont').forEach(function(el){ el.parentNode.removeChild(el); });
             document.querySelectorAll('.pb').forEach(function(el){ el.classList.remove('pb'); });
         }
+        function isSubheading(el){
+            if (!el || el.nodeType !== 1) return false;
+            if (el.tagName === 'H3') return true;
+            if (el.tagName === 'P') {
+                var s = el.querySelector('strong');
+                return !!s && s.textContent.trim() === el.textContent.trim();
+            }
+            return false;
+        }
         function paginateForPrint(){
             cleanupPagination();
             var size = PAGE_SIZES[prefSize];
@@ -606,15 +620,23 @@
                     item.classList.add('pb');
                     used = 0;
                 }
-                children.forEach(function(child){
+                children.forEach(function(child, i){
                     var ch = outerHeight(child);
                     if (used + ch <= pageH) { used += ch; return; }
+                    // pull a subheading stranded at the bottom of the page over with us
+                    var anchor = child;
+                    var moved = 0;
+                    var prevEl = children[i - 1];
+                    if (isSubheading(prevEl) && !prevEl.classList.contains('pb')) {
+                        anchor = prevEl;
+                        moved = outerHeight(prevEl);
+                    }
                     var cont = heading.cloneNode(false);
                     cont.removeAttribute('id');
                     cont.className = 'print-cont pb';
                     cont.textContent = titleCase(heading.textContent) + " (Cont'd.)";
-                    item.insertBefore(cont, child);
-                    used = headingH + ch;
+                    item.insertBefore(cont, anchor);
+                    used = headingH + moved + ch;
                 });
             });
 
