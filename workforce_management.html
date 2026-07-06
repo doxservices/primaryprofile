@@ -6,44 +6,60 @@
     <title>Xavier B. Hemmings - Workforce Management Director</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: #1a1a1a;
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
         }
         h1 {
-            font-size: 24px;
-            margin-bottom: 5px;
-            color: #000;
+            font-size: 26px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+            color: #1a1a1a;
+        }
+        .tagline {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2563eb;
+            margin-bottom: 10px;
         }
         h2 {
-            font-size: 18px;
-            color: #000;
-            border-bottom: 2px solid #333;
-            padding-bottom: 5px;
-            margin-top: 20px;
-            margin-bottom: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #1a1a1a;
+            border-left: 3px solid #2563eb;
+            border-bottom: 1px solid #e5e7eb;
+            padding-left: 10px;
+            padding-bottom: 6px;
+            margin-top: 26px;
+            margin-bottom: 12px;
         }
         h3 {
             font-size: 14px;
             margin-bottom: 5px;
-            color: #000;
+            color: #1a1a1a;
         }
         .contact-info {
             margin-bottom: 20px;
-            font-size: 12px;
+            font-size: 13px;
+            color: #6b7280;
         }
         .job-title {
             font-weight: bold;
             font-size: 14px;
+            color: #1a1a1a;
         }
         .company {
             font-style: italic;
+            color: #4b5563;
         }
         .date {
-            color: #666;
+            color: #6b7280;
             font-size: 12px;
         }
         ul {
@@ -53,14 +69,46 @@
         li {
             margin-bottom: 5px;
         }
+        .stat-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin: 16px 0 24px;
+        }
+        .stat-box {
+            background: #eff6ff;
+            border: 1px solid #dbeafe;
+            border-radius: 4px;
+            padding: 12px 14px;
+        }
+        .stat-box .stat-number {
+            display: block;
+            font-weight: 700;
+            font-size: 16px;
+            color: #1a1a1a;
+            margin-bottom: 2px;
+        }
+        .stat-box .stat-label {
+            font-size: 11px;
+            color: #6b7280;
+            line-height: 1.4;
+        }
         .skills-section ul {
             list-style-type: none;
             margin: 0;
             padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
         }
         .skills-section li {
-            display: inline;
-            margin-right: 15px;
+            display: inline-block;
+            background: #f3f4f6;
+            color: #4b5563;
+            padding: 4px 12px;
+            border-radius: 2px;
+            font-size: 12.5px;
+            font-weight: 500;
         }
 
         #navToggle {
@@ -134,12 +182,20 @@
     </nav>
 
     <h1>XAVIER B. HEMMINGS</h1>
+    <p class="tagline">Workforce Management | Global Operations | Forecasting & Capacity Planning</p>
     <div class="contact-info">
-        <p>Working in Kingston, Jamaica | (876) 507-6645 | x_hemmings@yahoo.com</p>
+        <p>Kingston, Jamaica | +1 (876) 507-6645 | x_hemmings@yahoo.com | XavierHemmings.com</p>
     </div>
 
     <h2>PROFESSIONAL SUMMARY</h2>
     <p>Strategic Workforce Management Leader with 15+ years of progressive experience managing global contact center operations across multiple regions. Proven track record of optimizing workforce efficiency for 6,500+ agents across 125 lines of business. Expert in forecasting, capacity planning, real-time management, and building WFM strategies that improve service levels while reducing operational costs. Certified Master Trainer in WFM disciplines with demonstrated ability to lead multi-site, multi-region operations.</p>
+
+    <div class="stat-row">
+        <div class="stat-box"><span class="stat-number">15+ Years</span><span class="stat-label">Global Workforce Management Operations</span></div>
+        <div class="stat-box"><span class="stat-number">6,500+ Agents</span><span class="stat-label">Managed Across 4 Global Regions</span></div>
+        <div class="stat-box"><span class="stat-number">125</span><span class="stat-label">Lines of Business Standardized</span></div>
+        <div class="stat-box"><span class="stat-number">700+</span><span class="stat-label">Specialized Campaigns Supported</span></div>
+    </div>
 
     <h2>CORE COMPETENCIES</h2>
     <div class="skills-section">
@@ -265,19 +321,23 @@
         var toggle = document.getElementById('navToggle');
         var overlay = document.getElementById('navOverlay');
         var sideNav = document.getElementById('sideNav');
+        var closeTimer = null;
         var locked = sessionStorage.getItem('sidebarOpen') === 'true';
 
         function show(){
+            clearTimeout(closeTimer);
             sideNav.classList.add('open');
             overlay.classList.add('open');
         }
         function hide(){
+            clearTimeout(closeTimer);
             sideNav.classList.remove('open');
             overlay.classList.remove('open');
         }
         function scheduleHide(){
             if (locked) return;
-            hide();
+            clearTimeout(closeTimer);
+            closeTimer = setTimeout(hide, 500);
         }
         function setLocked(value){
             locked = value;
