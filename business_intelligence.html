@@ -41,10 +41,10 @@
             text-transform: uppercase;
             letter-spacing: 0.6px;
             color: #175f6e;
-            background: #e9f4f6;
+            background: transparent;
             border-left: 3px solid #1f7a8c;
-            border-bottom: 1px solid #cfe3e8;
-            padding: 7px 12px;
+            border-bottom: 1px solid #dcebee;
+            padding: 0 0 6px 10px;
             margin-top: 28px;
             margin-bottom: 12px;
         }
@@ -241,8 +241,9 @@
             justify-content: center;
             cursor: pointer;
         }
-        #printControls .pc-pin svg { width: 14px; height: 14px; }
+        #printControls .pc-pin svg { width: 16px; height: 16px; transition: transform 0.2s ease; }
         #printControls .pc-pin.active { background: #1f7a8c; border-color: #1f7a8c; color: #ffffff; }
+        #printControls .pc-pin.active svg { transform: rotate(-18deg); }
         #printControls .pc-handle {
             position: absolute;
             top: 100%;
@@ -261,7 +262,7 @@
             padding: 0;
             cursor: pointer;
         }
-        #printControls .pc-handle svg { width: 14px; height: 14px; stroke: #1f7a8c; transition: transform 0.3s ease; }
+        #printControls .pc-handle svg { width: 15px; height: 15px; stroke: #1f7a8c; transition: transform 0.3s ease; }
         #printControls.open .pc-handle svg { transform: rotate(180deg); }
         #printControls .pc-print {
             border: none;
@@ -286,6 +287,19 @@
                 max-width: 100%;
                 padding: 0;
             }
+            .resume-header {
+                background: transparent;
+                border-left: 3px solid #1f7a8c;
+                border-bottom: 1px solid #dcebee;
+                padding: 12px 0 10px 10px;
+                margin-bottom: 18px;
+            }
+            h2, .print-cont {
+                background: transparent;
+                border-left: 3px solid #1f7a8c;
+                border-bottom: 1px solid #dcebee;
+                padding: 0 0 6px 10px;
+            }
             h2, h3, .job-title, .company { break-after: avoid; page-break-after: avoid; }
             li, .stat-box { break-inside: avoid; page-break-inside: avoid; }
             .pb { break-before: page; page-break-before: always; }
@@ -295,7 +309,7 @@
 </head>
 <body>
     <button id="navToggle" aria-label="Toggle navigation">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 7h14M5 12h14M5 17h14"/></svg>
     </button>
     <div id="navOverlay"></div>
     <div id="printControls">
@@ -304,10 +318,10 @@
         <button type="button" class="pc-size" data-size="legal">Legal</button>
         <button type="button" id="printBtn" class="pc-print">Print</button>
         <button type="button" id="pinBtn" class="pc-pin" title="Pin print setup" aria-label="Pin print setup">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 17v5"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14.7 3.2l6.1 6.1-2.15 2.15-1.75-.55-3.35 3.35v3.35l-1.2 1.2-3.55-3.55-4.65 4.65-1.05-1.05 4.65-4.65-3.55-3.55 1.2-1.2h3.35l3.35-3.35-.55-1.75L14.7 3.2z"/></svg>
         </button>
         <button type="button" id="pcHandle" class="pc-handle" aria-label="Toggle print setup">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M7 10l5 5 5-5"/></svg>
         </button>
     </div>
     <nav id="sideNav">
@@ -452,12 +466,17 @@
         var locked = sessionStorage.getItem('sidebarOpen') === 'true';
         var pinned = localStorage.getItem('printBarPinned') === 'true';
 
-        var DPI = 96;
-        var PAGE_SIZES = {
-            letter: { width: 8.5, height: 11, fill: 0.965 },
-            legal: { width: 8.5, height: 14, fill: 0.975 }
+        var PRINT_LAYOUT = {
+            dpi: 96,
+            sizes: {
+                letter: { width: 8.5, height: 11, fill: 0.965 },
+                legal: { width: 8.5, height: 14, fill: 0.975 }
+            },
+            margins: {
+                letter: { top: 0.5, right: 0.5, bottom: 0.5, left: 0.5 },
+                legal: { top: 0.55, right: 0.5, bottom: 0.55, left: 0.5 }
+            }
         };
-        var PRINT_MARGINS = { top: 0.5, right: 0.5, bottom: 0.5, left: 0.5 };
 
         var current = location.pathname.split('/').pop() || 'index.html';
         var profileNames = {
@@ -565,13 +584,17 @@
         var printStyle = document.createElement('style');
         document.head.appendChild(printStyle);
         var prefSize = localStorage.getItem('printPageSize');
-        if (!PAGE_SIZES[prefSize]) prefSize = 'letter';
+        if (!PRINT_LAYOUT.sizes[prefSize]) prefSize = 'letter';
         var sizeButtons = printControls.querySelectorAll('.pc-size');
 
+        function selectedMargins(){
+            return PRINT_LAYOUT.margins[prefSize] || PRINT_LAYOUT.margins.letter;
+        }
         function applyPrintSetup(){
+            var margins = selectedMargins();
             printStyle.textContent = '@page { size: ' + prefSize + '; margin: ' +
-                PRINT_MARGINS.top + 'in ' + PRINT_MARGINS.right + 'in ' +
-                PRINT_MARGINS.bottom + 'in ' + PRINT_MARGINS.left + 'in; }';
+                margins.top + 'in ' + margins.right + 'in ' +
+                margins.bottom + 'in ' + margins.left + 'in; }';
             sizeButtons.forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-size') === prefSize); });
             localStorage.setItem('printPageSize', prefSize);
         }
@@ -654,9 +677,10 @@
         }
         function paginateForPrint(){
             cleanupPagination();
-            var size = PAGE_SIZES[prefSize];
-            var pageH = (size.height - PRINT_MARGINS.top - PRINT_MARGINS.bottom) * DPI * size.fill;
-            var contentW = (size.width - PRINT_MARGINS.left - PRINT_MARGINS.right) * DPI;
+            var size = PRINT_LAYOUT.sizes[prefSize];
+            var margins = selectedMargins();
+            var pageH = (size.height - margins.top - margins.bottom) * PRINT_LAYOUT.dpi * size.fill;
+            var contentW = (size.width - margins.left - margins.right) * PRINT_LAYOUT.dpi;
             var prev = { width: document.body.style.width, maxWidth: document.body.style.maxWidth, padding: document.body.style.padding };
             document.body.style.width = contentW + 'px';
             document.body.style.maxWidth = 'none';
