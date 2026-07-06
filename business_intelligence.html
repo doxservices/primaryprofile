@@ -14,9 +14,7 @@
             margin: 0 auto;
             padding: 24px 20px 48px;
         }
-        strong {
-            color: #1f2937;
-        }
+        strong { color: #1f2937; }
         .resume-header {
             background: #e9f4f6;
             border-left: 4px solid #1f7a8c;
@@ -62,9 +60,7 @@
             font-size: 13px;
             color: #52616b;
         }
-        .contact-info p {
-            margin: 0;
-        }
+        .contact-info p { margin: 0; }
         .job-title {
             font-weight: bold;
             font-size: 14.5px;
@@ -82,9 +78,7 @@
             margin: 5px 0 15px 20px;
             padding: 0;
         }
-        li {
-            margin-bottom: 5px;
-        }
+        li { margin-bottom: 5px; }
         .stat-row {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -218,10 +212,7 @@
             color: #374151;
         }
         #printControls.open { transform: translate(-50%, 0); }
-        #printControls .pc-title {
-            font-weight: 600;
-            color: #175f6e;
-        }
+        #printControls .pc-title { font-weight: 600; color: #175f6e; }
         #printControls .pc-size {
             border: 1px solid #d5e8ec;
             background: #ffffff;
@@ -250,15 +241,8 @@
             justify-content: center;
             cursor: pointer;
         }
-        #printControls .pc-pin svg {
-            width: 14px;
-            height: 14px;
-        }
-        #printControls .pc-pin.active {
-            background: #1f7a8c;
-            border-color: #1f7a8c;
-            color: #ffffff;
-        }
+        #printControls .pc-pin svg { width: 14px; height: 14px; }
+        #printControls .pc-pin.active { background: #1f7a8c; border-color: #1f7a8c; color: #ffffff; }
         #printControls .pc-handle {
             position: absolute;
             top: 100%;
@@ -277,12 +261,7 @@
             padding: 0;
             cursor: pointer;
         }
-        #printControls .pc-handle svg {
-            width: 14px;
-            height: 14px;
-            stroke: #1f7a8c;
-            transition: transform 0.3s ease;
-        }
+        #printControls .pc-handle svg { width: 14px; height: 14px; stroke: #1f7a8c; transition: transform 0.3s ease; }
         #printControls.open .pc-handle svg { transform: rotate(180deg); }
         #printControls .pc-print {
             border: none;
@@ -307,7 +286,8 @@
                 max-width: 100%;
                 padding: 0;
             }
-            h2, h3 { break-after: avoid; page-break-after: avoid; }
+            h2, h3, .job-title, .company { break-after: avoid; page-break-after: avoid; }
+            li, .stat-box { break-inside: avoid; page-break-inside: avoid; }
             .pb { break-before: page; page-break-before: always; }
             .print-cont { display: block; }
         }
@@ -472,11 +452,12 @@
         var locked = sessionStorage.getItem('sidebarOpen') === 'true';
         var pinned = localStorage.getItem('printBarPinned') === 'true';
 
-        // Print layout variables: standard margins, page sizes in inches, fill factor
         var DPI = 96;
-        var PAGE_SIZES = { letter: { width: 8.5, height: 11 }, legal: { width: 8.5, height: 14 } };
+        var PAGE_SIZES = {
+            letter: { width: 8.5, height: 11, fill: 0.965 },
+            legal: { width: 8.5, height: 14, fill: 0.975 }
+        };
         var PRINT_MARGINS = { top: 0.5, right: 0.5, bottom: 0.5, left: 0.5 };
-        var PAGE_FILL = 0.96;
 
         var current = location.pathname.split('/').pop() || 'index.html';
         var profileNames = {
@@ -504,7 +485,6 @@
             sectionLinks.push({ id: slug, link: a });
         });
 
-        // Wrap each heading with its content so print pagination can move sections as units
         document.querySelectorAll('h2').forEach(function(h){
             var section = document.createElement('section');
             section.className = 'resume-section';
@@ -518,11 +498,8 @@
             }
         });
 
-        // Anchor jumps must clear the print bar, which overlays the top of the page
         var anchorOffset = printControls.offsetHeight + 24;
-        document.querySelectorAll('h2').forEach(function(h){
-            h.style.scrollMarginTop = anchorOffset + 'px';
-        });
+        document.querySelectorAll('h2').forEach(function(h){ h.style.scrollMarginTop = anchorOffset + 'px'; });
 
         function syncPin(){
             pinBtn.classList.toggle('active', pinned);
@@ -551,10 +528,7 @@
             sessionStorage.setItem('sidebarOpen', locked);
         }
 
-        toggle.addEventListener('click', function(){
-            setLocked(!locked);
-            locked ? show() : hide();
-        });
+        toggle.addEventListener('click', function(){ setLocked(!locked); locked ? show() : hide(); });
         toggle.addEventListener('mouseenter', show);
         toggle.addEventListener('mouseleave', scheduleHide);
         sideNav.addEventListener('mouseenter', show);
@@ -567,18 +541,12 @@
             localStorage.setItem('printBarPinned', pinned);
             syncPin();
         });
-        document.getElementById('pcHandle').addEventListener('click', function(){
-            printControls.classList.toggle('open');
-        });
+        document.getElementById('pcHandle').addEventListener('click', function(){ printControls.classList.toggle('open'); });
 
         if (locked) show();
         syncPin();
+        sideNav.querySelectorAll('a').forEach(function(a){ if (a.getAttribute('href') === current) a.classList.add('active'); });
 
-        sideNav.querySelectorAll('a').forEach(function(a){
-            if (a.getAttribute('href') === current) a.classList.add('active');
-        });
-
-        // Scroll: retract the print bar when unpinned, and spotlight the section in view
         function updateScrollSpy(){
             var pos = window.scrollY + anchorOffset + 40;
             var currentLink = null;
@@ -594,7 +562,6 @@
         }, { passive: true });
         updateScrollSpy();
 
-        // Print setup: standard margins, Letter/Legal selects the paper size
         var printStyle = document.createElement('style');
         document.head.appendChild(printStyle);
         var prefSize = localStorage.getItem('printPageSize');
@@ -605,103 +572,119 @@
             printStyle.textContent = '@page { size: ' + prefSize + '; margin: ' +
                 PRINT_MARGINS.top + 'in ' + PRINT_MARGINS.right + 'in ' +
                 PRINT_MARGINS.bottom + 'in ' + PRINT_MARGINS.left + 'in; }';
-            sizeButtons.forEach(function(b){
-                b.classList.toggle('active', b.getAttribute('data-size') === prefSize);
-            });
+            sizeButtons.forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-size') === prefSize); });
             localStorage.setItem('printPageSize', prefSize);
         }
         sizeButtons.forEach(function(b){
-            b.addEventListener('click', function(){
-                prefSize = b.getAttribute('data-size');
-                applyPrintSetup();
-            });
+            b.addEventListener('click', function(){ prefSize = b.getAttribute('data-size'); applyPrintSetup(); paginateForPrint(); });
         });
-        document.getElementById('printBtn').addEventListener('click', function(){
-            window.print();
-        });
+        document.getElementById('printBtn').addEventListener('click', function(){ window.print(); });
         applyPrintSetup();
 
-        // Pagination: force page breaks so every printed page opens with a section
-        // heading; sections taller than a page repeat theirs as "... (Cont'd.)".
         function outerHeight(el){
             var rect = el.getBoundingClientRect();
             var cs = window.getComputedStyle(el);
-            return rect.height + parseFloat(cs.marginTop) + parseFloat(cs.marginBottom);
+            return rect.height + parseFloat(cs.marginTop || 0) + parseFloat(cs.marginBottom || 0);
         }
         function cleanupPagination(){
             document.querySelectorAll('.print-cont').forEach(function(el){ el.parentNode.removeChild(el); });
             document.querySelectorAll('.pb').forEach(function(el){ el.classList.remove('pb'); });
         }
-        function isSubheading(el){
+        function isKeepWithNext(el){
             if (!el || el.nodeType !== 1) return false;
-            if (el.tagName === 'H3') return true;
-            if (el.tagName === 'P') {
-                var s = el.querySelector('strong');
-                return !!s && s.textContent.trim() === el.textContent.trim();
-            }
-            return false;
+            return el.tagName === 'H3' || el.classList.contains('job-title') || el.classList.contains('company');
+        }
+        function continuationHeading(baseHeading){
+            var cont = baseHeading.cloneNode(false);
+            cont.removeAttribute('id');
+            cont.className = 'print-cont pb';
+            cont.textContent = titleCase(baseHeading.textContent) + " (Cont'd.)";
+            return cont;
+        }
+        function collectBlocks(section){
+            var blocks = [];
+            Array.prototype.forEach.call(section.children, function(child){
+                if (child.tagName === 'DIV' && !child.classList.contains('skills-section') && !child.classList.contains('stat-row')) {
+                    Array.prototype.forEach.call(child.children, function(inner){ blocks.push(inner); });
+                } else {
+                    blocks.push(child);
+                }
+            });
+            return blocks;
+        }
+        function paginateSection(section, used, pageH){
+            var heading = section.querySelector('h2');
+            var headingH = heading ? outerHeight(heading) : 0;
+            var blocks = collectBlocks(section);
+
+            blocks.forEach(function(block, index){
+                if (block.classList && block.classList.contains('print-cont')) return;
+                var blockH = outerHeight(block);
+
+                if (used + blockH <= pageH) {
+                    used += blockH;
+                    return;
+                }
+
+                if (block === heading && used > 0) {
+                    block.classList.add('pb');
+                    used = blockH;
+                    return;
+                }
+
+                var anchor = block;
+                var moved = 0;
+                var prev = blocks[index - 1];
+                if (prev && prev !== heading && isKeepWithNext(prev) && !prev.classList.contains('pb')) {
+                    anchor = prev;
+                    moved = outerHeight(prev);
+                }
+
+                if (heading && block !== heading) {
+                    anchor.parentNode.insertBefore(continuationHeading(heading), anchor);
+                    used = headingH + moved + blockH;
+                } else {
+                    anchor.classList.add('pb');
+                    used = moved + blockH;
+                }
+
+                if (used > pageH) used = Math.min(blockH, pageH);
+            });
+            return used;
         }
         function paginateForPrint(){
             cleanupPagination();
             var size = PAGE_SIZES[prefSize];
-            var pageH = (size.height - PRINT_MARGINS.top - PRINT_MARGINS.bottom) * DPI * PAGE_FILL;
+            var pageH = (size.height - PRINT_MARGINS.top - PRINT_MARGINS.bottom) * DPI * size.fill;
             var contentW = (size.width - PRINT_MARGINS.left - PRINT_MARGINS.right) * DPI;
-            var prev = {
-                width: document.body.style.width,
-                maxWidth: document.body.style.maxWidth,
-                padding: document.body.style.padding
-            };
+            var prev = { width: document.body.style.width, maxWidth: document.body.style.maxWidth, padding: document.body.style.padding };
             document.body.style.width = contentW + 'px';
             document.body.style.maxWidth = 'none';
             document.body.style.padding = '0';
 
-            var flow = [];
-            var headerEl = document.querySelector('.resume-header');
-            if (headerEl) flow.push(headerEl);
-            document.querySelectorAll('.resume-section').forEach(function(s){ flow.push(s); });
-
             var used = 0;
-            flow.forEach(function(item){
-                var h = outerHeight(item);
-                if (used + h <= pageH) { used += h; return; }
-                if (h <= pageH) { item.classList.add('pb'); used = h; return; }
+            var headerEl = document.querySelector('.resume-header');
+            if (headerEl) used += outerHeight(headerEl);
 
-                // Section taller than one page: fill page by page, repeating the heading
-                var heading = item.querySelector('h2');
-                var headingH = heading ? outerHeight(heading) : 0;
-                var children = [];
-                for (var c = item.firstChild; c; c = c.nextSibling) {
-                    if (c.nodeType === 1) children.push(c);
+            document.querySelectorAll('.resume-section').forEach(function(section){
+                var sectionH = outerHeight(section);
+                if (used + sectionH <= pageH) {
+                    used += sectionH;
+                    return;
                 }
-                var firstBlockH = children.length > 1 ? outerHeight(children[1]) : 0;
-                if (used + headingH + firstBlockH > pageH) {
-                    item.classList.add('pb');
-                    used = 0;
+                if (sectionH <= pageH) {
+                    section.classList.add('pb');
+                    used = sectionH;
+                    return;
                 }
-                children.forEach(function(child, i){
-                    var ch = outerHeight(child);
-                    if (used + ch <= pageH) { used += ch; return; }
-                    // pull a subheading stranded at the bottom of the page over with us
-                    var anchor = child;
-                    var moved = 0;
-                    var prevEl = children[i - 1];
-                    if (isSubheading(prevEl) && !prevEl.classList.contains('pb')) {
-                        anchor = prevEl;
-                        moved = outerHeight(prevEl);
-                    }
-                    var cont = heading.cloneNode(false);
-                    cont.removeAttribute('id');
-                    cont.className = 'print-cont pb';
-                    cont.textContent = titleCase(heading.textContent) + " (Cont'd.)";
-                    item.insertBefore(cont, anchor);
-                    used = headingH + moved + ch;
-                });
+                used = paginateSection(section, used, pageH);
             });
 
             document.body.style.width = prev.width;
             document.body.style.maxWidth = prev.maxWidth;
             document.body.style.padding = prev.padding;
         }
+
         window.addEventListener('beforeprint', paginateForPrint);
         window.addEventListener('afterprint', cleanupPagination);
     })();
