@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Xavier B. Hemmings - Senior Business Analyst</title>
     <style>
+        :root {
+            --print-fs-body: 12.5px;
+            --print-lh-body: 1.5;
+            --print-fs-h1: 22px;
+            --print-fs-tagline: 12px;
+            --print-fs-contact: 11px;
+            --print-fs-h2: 12.5px;
+            --print-fs-h3: 11.5px;
+            --print-fs-title: 12.5px;
+        }
         body {
             font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.65;
@@ -300,13 +310,51 @@
         h2 { scroll-margin-top: 72px; }
         .print-cont { display: none; }
 
+        html.print-sim body { font-size: var(--print-fs-body); line-height: var(--print-lh-body); }
+        html.print-sim h1 { font-size: var(--print-fs-h1); }
+        html.print-sim .tagline { font-size: var(--print-fs-tagline); margin-bottom: 4px; }
+        html.print-sim .contact-info { font-size: var(--print-fs-contact); }
+        html.print-sim .resume-header { padding: 12px 16px 8px; margin-bottom: 16px; }
+        html.print-sim h2 { font-size: var(--print-fs-h2); margin-top: 18px; margin-bottom: 8px; padding: 4px 10px; }
+        html.print-sim h3 { font-size: var(--print-fs-h3); margin: 12px 0 6px; }
+        html.print-sim .job-title { font-size: var(--print-fs-title); }
+        html.print-sim .date { font-size: 10.5px; }
+        html.print-sim p { margin: 0 0 6px; }
+        html.print-sim ul { margin: 3px 0 10px 18px; }
+        html.print-sim li { margin-bottom: 2px; }
+        html.print-sim .stat-row { gap: 8px; margin: 10px 0 16px; }
+        html.print-sim .stat-box { padding: 8px 10px; }
+        html.print-sim .stat-box .stat-number { font-size: 13px; }
+        html.print-sim .stat-box .stat-label { font-size: 9.5px; }
+        html.print-sim .skills-section ul { gap: 5px; }
+        html.print-sim .skills-section li { padding: 2px 8px; font-size: 10.5px; }
+
         @media print {
             #navToggle, #navOverlay, #sideNav, #printControls { display: none !important; }
             body {
                 background: #ffffff;
                 max-width: 100%;
                 padding: 0;
+                font-size: var(--print-fs-body);
+                line-height: var(--print-lh-body);
             }
+            h1 { font-size: var(--print-fs-h1); }
+            .tagline { font-size: var(--print-fs-tagline); margin-bottom: 4px; }
+            .contact-info { font-size: var(--print-fs-contact); }
+            .resume-header { padding: 12px 16px 8px; margin-bottom: 16px; }
+            h2 { font-size: var(--print-fs-h2); margin-top: 18px; margin-bottom: 8px; padding: 4px 10px; }
+            h3 { font-size: var(--print-fs-h3); margin: 12px 0 6px; }
+            .job-title { font-size: var(--print-fs-title); }
+            .date { font-size: 10.5px; }
+            p { margin: 0 0 6px; }
+            ul { margin: 3px 0 10px 18px; }
+            li { margin-bottom: 2px; }
+            .stat-row { gap: 8px; margin: 10px 0 16px; }
+            .stat-box { padding: 8px 10px; }
+            .stat-box .stat-number { font-size: 13px; }
+            .stat-box .stat-label { font-size: 9.5px; }
+            .skills-section ul { gap: 5px; }
+            .skills-section li { padding: 2px 8px; font-size: 10.5px; }
             h2, h3, .job-title, .company { break-after: avoid; page-break-after: avoid; }
             li, .stat-box { break-inside: avoid; page-break-inside: avoid; }
             .resume-section > div { break-inside: avoid; page-break-inside: avoid; }
@@ -690,6 +738,7 @@
                 maxWidth: document.body.style.maxWidth,
                 padding: document.body.style.padding
             };
+            document.documentElement.classList.add('print-sim');
             document.body.style.width = contentW + 'px';
             document.body.style.maxWidth = 'none';
             document.body.style.padding = '0';
@@ -740,6 +789,7 @@
             document.body.style.width = prev.width;
             document.body.style.maxWidth = prev.maxWidth;
             document.body.style.padding = prev.padding;
+            document.documentElement.classList.remove('print-sim');
         }
         window.addEventListener('beforeprint', paginateForPrint);
         window.addEventListener('afterprint', cleanupPagination);
