@@ -613,7 +613,7 @@
         toggle.addEventListener('mouseleave', scheduleHide);
         sideNav.addEventListener('mouseenter', show);
         sideNav.addEventListener('mouseleave', scheduleHide);
-        printControls.addEventListener('mouseenter', show);
+        printControls.addEventListener('mouseenter', function(){ clearTimeout(closeTimer); });
         printControls.addEventListener('mouseleave', scheduleHide);
         overlay.addEventListener('click', function(){ setLocked(false); hide(); });
         pinBtn.addEventListener('click', function(){
@@ -634,12 +634,16 @@
 
         // Scroll: retract the print bar when unpinned, and spotlight the section in view
         function updateScrollSpy(){
+            if (!sectionLinks.length) return;
             var pos = window.scrollY + anchorOffset + 40;
-            var currentLink = null;
+            var currentLink = sectionLinks[0].link;
             sectionLinks.forEach(function(s){
                 var el = document.getElementById(s.id);
                 if (el && el.getBoundingClientRect().top + window.scrollY <= pos) currentLink = s.link;
             });
+            if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
+                currentLink = sectionLinks[sectionLinks.length - 1].link;
+            }
             sectionLinks.forEach(function(s){ s.link.classList.toggle('active', s.link === currentLink); });
         }
         window.addEventListener('scroll', function(){
