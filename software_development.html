@@ -307,7 +307,9 @@
                 max-width: 100%;
                 padding: 0;
             }
-            h2, h3 { break-after: avoid; page-break-after: avoid; }
+            h2, h3, .job-title, .company { break-after: avoid; page-break-after: avoid; }
+            li, .stat-box { break-inside: avoid; page-break-inside: avoid; }
+            .resume-section > div { break-inside: avoid; page-break-inside: avoid; }
             .pb { break-before: page; page-break-before: always; }
             .print-cont { display: block; }
         }

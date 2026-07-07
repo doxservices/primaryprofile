@@ -302,6 +302,7 @@
             }
             h2, h3, .job-title, .company { break-after: avoid; page-break-after: avoid; }
             li, .stat-box { break-inside: avoid; page-break-inside: avoid; }
+            .resume-section > div { break-inside: avoid; page-break-inside: avoid; }
             .pb { break-before: page; page-break-before: always; }
             .print-cont { display: block; }
         }
@@ -629,15 +630,9 @@
             return cont;
         }
         function collectBlocks(section){
-            var blocks = [];
-            Array.prototype.forEach.call(section.children, function(child){
-                if (child.tagName === 'DIV' && !child.classList.contains('skills-section') && !child.classList.contains('stat-row')) {
-                    Array.prototype.forEach.call(child.children, function(inner){ blocks.push(inner); });
-                } else {
-                    blocks.push(child);
-                }
-            });
-            return blocks;
+            // Each direct child is one indivisible block: an experience div moves
+            // whole (title, company, and bullets together) instead of splitting.
+            return Array.prototype.slice.call(section.children);
         }
         function paginateSection(section, used, pageH){
             var heading = section.querySelector('h2');
